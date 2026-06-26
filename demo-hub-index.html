@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIO Demo Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --spruce-900: #031F23;
+      --spruce-700: #0B363B;
+      --spruce-600: #29555B;
+      --spruce-400: #5F8C92;
+      --spruce-200: #A1C2C6;
+      --spruce-100: #CDE3E5;
+      --spruce-25: #EFF9FA;
+      --verdant: #ABFFAE;
+      --verdant-500: #5BCA68;
+      --verdant-600: #32A449;
+      --charcoal-25: #FAFAF9;
+      --charcoal-100: #EBEBEB;
+      --charcoal-200: #D9D9D9;
+      --charcoal-500: #808080;
+      --charcoal-700: #313131;
+      --white: #FFFFFF;
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--charcoal-25);
+      color: var(--spruce-900);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--spruce-900);
+      padding: 0 48px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--verdant);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg { width: 14px; height: 14px; }
+
+    .logo-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+
+    .logo-text span {
+      color: var(--spruce-200);
+      font-weight: 400;
+    }
+
+    .header-badge {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--spruce-900);
+      background: var(--verdant);
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--spruce-900);
+      padding: 64px 48px 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(171,255,174,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--verdant);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow span {
+      width: 20px; height: 1px;
+      background: var(--verdant);
+      opacity: 0.5;
+      display: block;
+    }
+
+    .hero-title {
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.12;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--verdant);
+    }
+
+    .hero-body {
+      font-size: 16px;
+      color: var(--spruce-200);
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works {
+      background: var(--spruce-700);
+      padding: 40px 48px;
+      border-bottom: 1px solid var(--spruce-600);
+    }
+
+    .how-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .how-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--spruce-400);
+      margin-bottom: 20px;
+    }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .how-step {
+      padding-right: 32px;
+      position: relative;
+    }
+
+    .how-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 16px; top: 4px;
+      height: calc(100% - 4px);
+      width: 1px;
+      background: var(--spruce-600);
+    }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--verdant);
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .step-body {
+      font-size: 13px;
+      color: var(--spruce-200);
+      line-height: 1.6;
+    }
+
+    .step-body code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      background: var(--spruce-900);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--verdant);
+    }
+
+    .step-body strong { color: var(--white); font-weight: 500; }
+
+    /* ── KEY LOCATIONS ── */
+    .keys-note {
+      max-width: 960px;
+      margin: 24px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--spruce-600);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .key-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .key-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--verdant);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .key-text {
+      font-size: 13px;
+      color: var(--spruce-200);
+      line-height: 1.5;
+    }
+
+    .key-text strong { color: var(--white); font-weight: 500; }
+
+    /* ── STORES ── */
+    .stores-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 48px 80px;
+    }
+
+    .stores-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .stores-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--spruce-900);
+      letter-spacing: -0.01em;
+    }
+
+    .stores-count {
+      font-size: 13px;
+      color: var(--charcoal-500);
+    }
+
+    .stores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+    }
+
+    /* ── STORE CARD ── */
+    .store-card {
+      border: 1px solid var(--charcoal-200);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      overflow: hidden;
+      transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .store-card:not(.coming-soon):hover {
+      box-shadow: 0 4px 20px rgba(11,54,59,0.12);
+      border-color: var(--spruce-200);
+      transform: translateY(-2px);
+    }
+
+    .store-card-visual {
+      height: 112px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      position: relative;
+    }
+
+    .store-card-body {
+      padding: 16px 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .store-card-industry {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--charcoal-500);
+      margin-bottom: 5px;
+    }
+
+    .store-card-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--spruce-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .store-card-desc {
+      font-size: 13px;
+      color: var(--charcoal-500);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .store-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .store-card-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 7px;
+      border-radius: 4px;
+      background: var(--spruce-25);
+      color: var(--spruce-600);
+      border: 1px solid var(--spruce-100);
+    }
+
+    .store-card-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--spruce-700);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .store-card-link svg {
+      width: 12px; height: 12px;
+      transition: transform 0.15s;
+    }
+
+    .store-card:hover .store-card-link svg { transform: translateX(3px); }
+
+    .store-card.coming-soon {
+      opacity: 0.55;
+      pointer-events: none;
+      background: var(--charcoal-25);
+    }
+
+    .coming-soon-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--charcoal-500);
+      background: var(--charcoal-100);
+      padding: 3px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--spruce-900);
+      border-top: 1px solid var(--spruce-700);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--spruce-400);
+    }
+
+    footer a { color: var(--spruce-200); text-decoration: none; }
+    footer a:hover { color: var(--verdant); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { padding: 0 24px; }
+      .hero { padding: 48px 24px 56px; }
+      .hero-title { font-size: 32px; }
+      .how-it-works { padding: 32px 24px; }
+      .how-steps { grid-template-columns: 1fr; gap: 24px; }
+      .how-step::after { display: none; }
+      .how-step { padding-right: 0; }
+      .keys-note { grid-template-columns: 1fr; }
+      .stores-section { padding: 40px 24px 60px; }
+      .stores-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="/">
+    <div class="logo-mark">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="7" cy="7" r="2.5" fill="#031F23"/>
+        <circle cx="7" cy="1.5" r="1.2" fill="#031F23" opacity="0.6"/>
+        <circle cx="7" cy="12.5" r="1.2" fill="#031F23" opacity="0.6"/>
+        <circle cx="1.5" cy="7" r="1.2" fill="#031F23" opacity="0.6"/>
+        <circle cx="12.5" cy="7" r="1.2" fill="#031F23" opacity="0.6"/>
+      </svg>
+    </div>
+    <span class="logo-text">CIO Demo Hub <span>· CS &amp; SA</span></span>
+  </a>
+  <span class="header-badge">Internal use only</span>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span></span>Customer.io Demo Stores<span></span></div>
+    <h1 class="hero-title">Real stores.<br><em>Real events.</em> Zero setup.</h1>
+    <p class="hero-body">A collection of live demo stores built to test Customer.io features end-to-end. Each store fires real events, identifies users, and supports in-app messages. Point any store at your own workspace in seconds.</p>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="how-inner">
+    <div class="how-label">How to use</div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">Step 1</div>
+        <div class="step-title">Pick a store below</div>
+        <div class="step-body">Choose the industry closest to your customer's use case. Each store has a realistic product catalogue and a full event suite already wired up.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">Step 2</div>
+        <div class="step-title">Connect your workspace</div>
+        <div class="step-body">Click <strong>Switch workspace</strong> in the store banner. Enter your <code>write key</code> and <code>site ID</code> — events flow into your workspace in real time.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">Step 3</div>
+        <div class="step-title">Build and test</div>
+        <div class="step-body">Browse, sign up, place an order. Then build segments, workflows, or full campaign storylines against live data in your own workspace.</div>
+      </div>
+    </div>
+    <div class="keys-note">
+      <div class="key-item">
+        <div class="key-dot"></div>
+        <div class="key-text"><strong>Write key</strong> — found when you set up a JavaScript source in Data Pipelines. Labelled "API Key" in the source settings.</div>
+      </div>
+      <div class="key-item">
+        <div class="key-dot"></div>
+        <div class="key-text"><strong>Site ID</strong> — found under Settings → API Credentials → Track API. This is different from your write key.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stores-section">
+  <div class="stores-header">
+    <div class="stores-title">Demo stores</div>
+    <div class="stores-count" id="store-count"></div>
+  </div>
+  <div class="stores-grid" id="stores-grid"></div>
+</section>
+
+<footer>
+  <span>Built by Jess · CX Solutions Architecture</span>
+  <span>Questions? Ping <a href="#">#cx-solutions</a> on Slack</span>
+</footer>
+
+<script>
+const STORES = [
+  {
+    name: 'Folia',
+    industry: 'E-commerce',
+    desc: 'A rare plant shop. Browse, save plants to a wishlist, add to cart, and place orders. Covers the full e-commerce event lifecycle including cart abandonment.',
+    url: 'https://folia-test-store.vercel.app',
+    emoji: '🌿',
+    bg: '#E8EFE7',
+    tags: ['Cart', 'Orders', 'In-app', 'Objects'],
+    live: true
+  },
+  {
+    name: 'SaaS App',
+    industry: 'SaaS / B2B',
+    desc: 'A trial-to-paid software product. Start a trial, explore features, hit usage limits, and trigger upgrade flows. Ideal for onboarding and activation demos.',
+    url: null,
+    emoji: '⚡',
+    bg: '#EEF2FF',
+    tags: ['Trial', 'Activation', 'Upgrade'],
+    live: false
+  },
+  {
+    name: 'Fintech',
+    industry: 'Fintech',
+    desc: 'A personal finance dashboard with account setup, spending milestones, and product recommendations. For onboarding and lifecycle nudge flows.',
+    url: null,
+    emoji: '💳',
+    bg: '#ECFDF5',
+    tags: ['Onboarding', 'Milestones', 'Upsell'],
+    live: false
+  },
+  {
+    name: 'Crypto / Blockchain',
+    industry: 'Web3 / Crypto',
+    desc: 'A crypto trading and wallet app. Track portfolio events, price alerts, deposit and withdrawal flows, and KYC onboarding journeys.',
+    url: null,
+    emoji: '₿',
+    bg: '#FFF8EE',
+    tags: ['KYC', 'Alerts', 'Wallet'],
+    live: false
+  },
+  {
+    name: 'iGaming',
+    industry: 'iGaming',
+    desc: 'An online gaming and betting platform. Registration, first deposit, game sessions, and responsible gaming flows. High-frequency event testing.',
+    url: null,
+    emoji: '🎲',
+    bg: '#0B363B',
+    tags: ['Registration', 'Deposits', 'Retention'],
+    live: false,
+    darkVisual: true
+  },
+];
+
+const grid = document.getElementById('stores-grid');
+const countEl = document.getElementById('store-count');
+const live = STORES.filter(s => s.live).length;
+countEl.textContent = `${live} live · ${STORES.length - live} coming soon`;
+
+grid.innerHTML = STORES.map(store => {
+  const visualStyle = `background:${store.bg};`;
+  const emojiColor = store.darkVisual ? 'filter:brightness(1.4)' : '';
+
+  if (store.live) {
+    return `
+      <a class="store-card" href="${store.url}" target="_blank" rel="noopener">
+        <div class="store-card-visual" style="${visualStyle}">
+          <span style="font-size:42px;${emojiColor}">${store.emoji}</span>
+        </div>
+        <div class="store-card-body">
+          <div class="store-card-industry">${store.industry}</div>
+          <div class="store-card-name">${store.name}</div>
+          <div class="store-card-desc">${store.desc}</div>
+          <div class="store-card-footer">
+            <div class="store-card-tags">${store.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <div class="store-card-link">Open <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+      </a>`;
+  } else {
+    return `
+      <div class="store-card coming-soon">
+        <div class="store-card-visual" style="${visualStyle}">
+          <span style="font-size:42px;${emojiColor}">${store.emoji}</span>
+        </div>
+        <div class="store-card-body">
+          <div class="store-card-industry">${store.industry}</div>
+          <div class="store-card-name">${store.name}</div>
+          <div class="store-card-desc">${store.desc}</div>
+          <div class="store-card-footer">
+            <div class="store-card-tags">${store.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <span class="coming-soon-badge">Coming soon</span>
+          </div>
+        </div>
+      </div>`;
+  }
+}).join('');
+</script>
+</body>
+</html>
